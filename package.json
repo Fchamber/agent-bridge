@@ -1,0 +1,16 @@
+{
+  "name": "agent-bridge",
+  "version": "1.0.0",
+  "description": "MCP bridge so Claude Code and Cursor can delegate tasks to each other",
+  "scripts": {
+    "test": "node test.mjs"
+  },
+  "keywords": [],
+  "author": "Flynn Chambers",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.6.5"
+  }
+}

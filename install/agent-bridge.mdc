@@ -1,0 +1,44 @@
+---
+description: Delegate planning and review to Claude Code through the agent-bridge MCP server. Keeps token cost split across the Cursor and Claude subscriptions.
+alwaysApply: true
+---
+
+# Delegating to Claude Code
+
+The `agent-bridge` MCP server gives you `ask_claude`. It runs a task in Claude Code
+and returns the answer.
+
+The same server also exposes `ask_cursor`. Never call it. That is you. It exists for
+Claude Code to reach you, not for you to spawn a copy of yourself.
+
+Claude and Cursor bill to separate subscriptions. Execution burns the most tokens.
+Do the execution here. Send the thinking to Claude. That splits the cost.
+
+## When to call ask_claude
+
+Call it in these cases:
+
+- Before non-trivial work, with `mode: "plan"`. Ask for the approach, not the code.
+- After a multi-file change, to review the diff.
+- On any architecture or design decision.
+- When you are stuck after two failed attempts.
+
+Do not call it for a one-line fix, a rename, or anything you already know how to do.
+A call costs time and Claude allowance. Batch your questions into one call.
+
+## Writing the task string
+
+Claude sees none of this conversation. The `task` string is all it gets.
+Name the repository root, the files in scope, what you tried, and the exact question.
+Set `cwd` to the repository root so Claude can read the code itself.
+
+## If the call is refused
+
+The bridge refuses when delegation depth is already 1. That means Claude called you,
+so you must not call back. Do the work yourself and say in your answer that the
+bridge refused. Never retry the call.
+
+## Disagreement
+
+If Claude's advice conflicts with what you found in the code, do not silently pick one.
+State both positions and let the user decide.
