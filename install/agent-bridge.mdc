@@ -1,5 +1,5 @@
 ---
-description: Delegate planning and review to Claude Code through the agent-bridge MCP server. Keeps token cost split across the Cursor and Claude subscriptions.
+description: Delegate work to Claude Code through the agent-bridge MCP server. Keeps token cost split across the Cursor and Claude subscriptions.
 alwaysApply: true
 ---
 
@@ -11,26 +11,36 @@ and returns the answer.
 The same server also exposes `ask_cursor`. Never call it. That is you. It exists for
 Claude Code to reach you, not for you to spawn a copy of yourself.
 
-Claude and Cursor bill to separate subscriptions. Execution burns the most tokens.
-Do the execution here. Send the thinking to Claude. That splits the cost.
+Cursor and Claude bill to separate subscriptions. Whichever one does the work spends
+that allowance. Hand over what you can, so the cost splits.
 
-## When to call ask_claude
+## Send to Claude when the work needs something you do not have
 
-Call it in these cases:
+Check this first. These are hard blocks, not preferences.
+
+- Microsoft 365: email, calendar, Teams, SharePoint.
+- Pax8, StrataMax, Firmable, Strety, Canva, draw.io.
+- Any branded document or report that depends on a Claude Code skill, for example
+  proposals, Word or Excel deliverables, Essential 8 assessments, AI readiness reports.
+
+Do not attempt these yourself and do not approximate them. The output will look
+finished and be wrong.
+
+## Send to Claude when a second mind is worth the call
 
 - Before non-trivial work, with `mode: "plan"`. Ask for the approach, not the code.
-- After a multi-file change, to review the diff.
+- After a multi-file change, to review it.
 - On any architecture or design decision.
 - When you are stuck after two failed attempts.
 
-Do not call it for a one-line fix, a rename, or anything you already know how to do.
+Do not call for a one-line fix, a rename, or anything you already know how to do.
 A call costs time and Claude allowance. Batch your questions into one call.
 
 ## Writing the task string
 
 Claude sees none of this conversation. The `task` string is all it gets.
-Name the repository root, the files in scope, what you tried, and the exact question.
-Set `cwd` to the repository root so Claude can read the code itself.
+Name the directory, the files in scope, what you tried, and the exact question.
+Set `cwd` to the directory the work belongs in, so Claude can read it directly.
 
 ## If the call is refused
 
@@ -40,5 +50,5 @@ bridge refused. Never retry the call.
 
 ## Disagreement
 
-If Claude's advice conflicts with what you found in the code, do not silently pick one.
+If Claude's advice conflicts with what you found, do not silently pick one.
 State both positions and let the user decide.

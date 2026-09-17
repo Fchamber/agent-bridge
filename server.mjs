@@ -102,7 +102,7 @@ const server = new McpServer({ name: 'agent-bridge', version: '1.0.0' });
 
 server.registerTool('ask_cursor', {
   title: 'Delegate a task to Cursor',
-  description: 'Run a task in Cursor Agent and return its answer. Use PROACTIVELY for implementation work once the approach is settled: applying a planned change, a refactor, writing tests to a stated spec, or any multi-file edit. Cursor bills to a separate subscription, so this preserves the Claude allowance for planning and review. Cursor sees none of this conversation, so the task string must be a complete self-contained brief. Read-only by default; pass mode=write to allow edits. Pass a model chosen for the job; call list_cursor_models first if unsure.',
+  description: 'Run a task in Cursor Agent and return its answer. Use PROACTIVELY for any work Cursor can reach, not only code: implementation and refactoring, tracing how a codebase works, reading or summarising many files, bulk and repetitive edits, data pulls and analysis through MCP servers both sides share, research, and a second opinion on any decision. Do not send work needing a tool or skill only this assistant has. Cursor bills to a separate subscription, so this preserves the Claude allowance for planning and review. Cursor sees none of this conversation, so the task string must be a complete self-contained brief. Read-only by default; pass mode=write to allow edits. Pass a model chosen for the job; call list_cursor_models first if unsure.',
   inputSchema: shared,
 }, async ({ task, mode, model, cwd, timeout_seconds }) => {
   const blocked = depthGuard();
@@ -117,7 +117,7 @@ server.registerTool('ask_cursor', {
 
 server.registerTool('ask_claude', {
   title: 'Delegate a task to Claude Code',
-  description: 'Run a task in Claude Code and return its answer. Use PROACTIVELY from Cursor for planning, architecture decisions and code review, and when stuck after two failed attempts. Claude bills to a separate subscription, so this splits cost away from Cursor. Claude sees none of this conversation, so the task string must be a complete self-contained brief. Read-only by default; pass mode=write to allow edits.',
+  description: 'Run a task in Claude Code and return its answer. Use PROACTIVELY from Cursor for planning, architecture decisions and review, when stuck after two failed attempts, and for any work needing a tool or skill Cursor does not have. Claude bills to a separate subscription, so this splits cost away from Cursor. Claude sees none of this conversation, so the task string must be a complete self-contained brief. Read-only by default; pass mode=write to allow edits.',
   inputSchema: shared,
 }, async ({ task, mode, model, cwd, timeout_seconds }) => {
   const blocked = depthGuard();

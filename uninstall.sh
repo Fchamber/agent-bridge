@@ -19,6 +19,7 @@ main() {
     warn "claude command not found, skipping Claude Code integration removal"
   fi
   rm -f "$HOME/.claude/agents/cursor-executor.md"
+  rm -f "$HOME/.claude/agents/cursor-delegate.md"
 
   progress "Removing Cursor integration"
   rm -f "$HOME/.cursor/rules/agent-bridge.mdc"
