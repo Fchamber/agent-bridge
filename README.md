@@ -232,6 +232,20 @@ Three rules:
 
 ## What is tested, and what is not
 
+### Restart both tools after installing
+
+A Claude Code session that started before the install cannot see the new tools. The
+`cursor-executor` subagent then fails with:
+
+```
+Agent 'cursor-executor' would be spawned with zero tools
+unrecognized [mcp__agent-bridge__ask_cursor]
+```
+
+That is not a broken install. Quit Claude Code and start it again. Same for Cursor.
+
+### What is tested
+
 Tested on macOS with Claude Code and Cursor CLI 2026.08.11:
 
 - The server, the two tools, and the self-test.
@@ -256,6 +270,9 @@ Reports welcome, especially from Linux and Windows.
 npm test           # fast checks only
 LIVE=1 npm test    # adds a real Claude Code round trip
 ```
+
+`LIVE=1` calls Claude Code for real. Allow `mcp__agent-bridge__ask_claude` first, or
+approve the prompt when it appears.
 
 ## Notes
 

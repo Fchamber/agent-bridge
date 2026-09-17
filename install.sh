@@ -65,7 +65,7 @@ main() {
   progress "Manual steps"
   echo "1. Log in to Cursor with: cursor-agent login"
   echo "2. Add \"mcp__agent-bridge__ask_cursor\" to permissions.allow in ~/.claude/settings.json, otherwise every delegation prompts"
-  echo "3. Restart Claude Code and Cursor"
+  echo "3. Restart Claude Code and Cursor. A session started before this install cannot see the new tools, and the cursor-executor agent fails until you restart"
 }
 
 main "$@"
