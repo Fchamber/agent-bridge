@@ -30,8 +30,8 @@ That is the whole idea. Here are the parts that make it happen.
 - **A depth guard.** The bridge refuses a second hop. Claude can call Cursor. That
   Cursor cannot call Claude back. Without this, two agents can loop and drain both
   subscriptions.
-- **A log.** Every call writes one line to `~/.agent-bridge/log.jsonl`, so you can
-  check whether the split is actually happening.
+- **A log.** Every delegated call writes one line to `~/.agent-bridge/log.jsonl`, so
+  you can check whether the split is actually happening. Model lookups are not logged.
 
 ## Why you might want this
 
@@ -137,7 +137,7 @@ Both take the same options.
 - `task` (required): the full brief. The other side sees nothing else.
 - `mode`: `plan` (read only, the default) or `write`.
 - `model`: optional passthrough, for example `gpt-5.3-codex` or `claude-opus-5-thinking-high`.
-- `cwd`: working directory. Defaults to the server's directory.
+- `cwd`: working directory. Defaults to the server process's current directory.
 - `timeout_seconds`: default 600, max 3600.
 
 ## Writing a good brief
@@ -192,7 +192,8 @@ or you will push delegation into every project you own, including client work.
 
 ## Reading the log
 
-Every call appends one row to `~/.agent-bridge/log.jsonl`. Override the path with
+Every `ask_cursor` and `ask_claude` call appends one row to `~/.agent-bridge/log.jsonl`.
+`list_cursor_models` is a read-only lookup and is not logged. Override the path with
 `AGENT_BRIDGE_LOG`.
 
 ```json

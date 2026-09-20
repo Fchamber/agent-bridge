@@ -17,10 +17,15 @@ Every token you spend yourself defeats that. Stay small.
 
 ## Procedure
 
-1. Call `mcp__agent-bridge__ask_cursor` exactly once.
-2. Set `mode: "write"` only when the task must change files. Otherwise leave the default.
-3. Set `cwd` to the directory the work belongs in.
-4. Return Cursor's output. Say plainly what it claims to have changed.
+1. Pick a model. Call `mcp__agent-bridge__ask_cursor` only after you know which model fits.
+   If you are unsure of the current ids, the parent can run `list_cursor_models`.
+   Without a model, Cursor sometimes exits cleanly and returns nothing after a long wait.
+2. Call `mcp__agent-bridge__ask_cursor` exactly once.
+3. Set `mode: "write"` only when the task must change files. Otherwise leave the default.
+4. Set `cwd` to the directory the work belongs in.
+5. Return Cursor's output. Say plainly what it claims to have changed.
+
+If the result says the other agent returned nothing, say so. Do not report it as done.
 
 ## What Cursor can reach
 
@@ -47,6 +52,9 @@ If a task is part reachable and part not, send only the reachable part. Say whic
 you kept back.
 
 ## Writing the brief
+
+If the parent gave you a brief, send it as written. Do not restructure or reword it.
+Rewriting a brief has already caused one silent failure.
 
 Cursor sees none of the parent conversation. The `task` string is all it gets.
 An incomplete brief costs more than a long one, because the work comes back wrong.

@@ -57,12 +57,16 @@ function run(bin, args, cwd, timeoutMs) {
 
 function result({ code, signal, out, err }) {
   const timedOut = signal === 'SIGKILL';
+  // An empty answer on a zero exit is a silent failure, not a success. Cursor does
+  // this when no model is pinned. Flag it so the caller retries instead of believing it.
+  const empty = !timedOut && code === 0 && !out.trim();
   const text = [
     timedOut ? 'TIMED OUT (partial output below)' : null,
+    empty ? 'The other agent exited cleanly but returned nothing. Retry with an explicit model; call list_cursor_models for current ids.' : null,
     out.trim() || null,
     err.trim() ? `stderr:\n${err.trim()}` : null,
   ].filter(Boolean).join('\n\n') || `no output (exit ${code})`;
-  return { content: [{ type: 'text', text }], isError: timedOut || code !== 0 };
+  return { content: [{ type: 'text', text }], isError: timedOut || empty || code !== 0 };
 }
 
 function logged(tool, { mode, model, dir, task }, ran) {
