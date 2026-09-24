@@ -28,10 +28,11 @@ finished and be wrong.
 
 ## Send to Claude when a second mind is worth the call
 
-- Before non-trivial work, with `mode: "plan"`. Ask for the approach, not the code.
-- After a multi-file change, to review it.
-- On any architecture or design decision.
+- On an architecture or design decision that is hard to reverse.
 - When you are stuck after two failed attempts.
+
+Execution, exploration, routine planning and routine review stay here. Claude already
+hands that work to you, so sending it back defeats the split.
 
 Do not call for a one-line fix, a rename, or anything you already know how to do.
 A call costs time and Claude allowance. Batch your questions into one call.

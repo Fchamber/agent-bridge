@@ -1,7 +1,7 @@
 ---
 name: cursor-delegate
 description: Hands a self-contained unit of work to Cursor, which bills to a separate subscription. Use PROACTIVELY whenever a task is well enough defined to describe in writing and does not need a tool only this assistant has. Covers implementation and refactoring, research and codebase tracing, reading or summarising many files, bulk and repetitive edits, data pulls and analysis through shared MCP servers, and second opinions on any decision. Do NOT use when the work needs Microsoft 365, a branded document, or any other capability listed under "What Cursor cannot reach" in this agent.
-tools: ["mcp__agent-bridge__ask_cursor"]
+tools: ["mcp__agent-bridge__ask_cursor", "mcp__agent-bridge__list_cursor_models"]
 model: haiku
 ---
 
@@ -17,8 +17,9 @@ Every token you spend yourself defeats that. Stay small.
 
 ## Procedure
 
-1. Pick a model. Call `mcp__agent-bridge__ask_cursor` only after you know which model fits.
-   If you are unsure of the current ids, the parent can run `list_cursor_models`.
+1. Pick a model. If the brief does not name one, call `mcp__agent-bridge__list_cursor_models`
+   once and choose by job: a coding model for code, a small fast model for mechanical edits,
+   a large reasoning model for tracing or a second opinion. Skip any model marked (NO ZDR).
    Without a model, Cursor sometimes exits cleanly and returns nothing after a long wait.
 2. Call `mcp__agent-bridge__ask_cursor` exactly once.
 3. Set `mode: "write"` only when the task must change files. Otherwise leave the default.

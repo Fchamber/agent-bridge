@@ -25,8 +25,9 @@ That is the whole idea. Here are the parts that make it happen.
   cause of a bad result.
 - **A subagent, on the Claude side.** A small helper that tells Claude when to hand
   execution to Cursor. You do not name the tool yourself.
-- **A rule, on the Cursor side.** The same idea in reverse. Cursor asks Claude for
-  plans and code reviews on its own.
+- **A rule, on the Cursor side.** Cursor asks Claude only for hard design calls, when
+  it is stuck, or for a tool only Claude has. Routine plans and reviews stay in Cursor,
+  so work does not bounce back to the plan it was sent away from.
 - **A depth guard.** The bridge refuses a second hop. Claude can call Cursor. That
   Cursor cannot call Claude back. Without this, two agents can loop and drain both
   subscriptions.
@@ -129,7 +130,7 @@ check the label before you pass an id, every time. The list marks it plainly.
 | Tool | Runs | Use it for |
 |---|---|---|
 | `ask_cursor` | `cursor-agent -p` | Implementation, once the approach is settled. |
-| `ask_claude` | `claude -p` | Planning, architecture, code review. |
+| `ask_claude` | `claude -p` | Hard design calls, getting unstuck, Claude-only tools. |
 | `list_cursor_models` | `cursor-agent models` | Checking which model ids exist right now. |
 
 Both take the same options.
@@ -161,7 +162,8 @@ You should never have to name a tool. Three pieces handle it.
 |---|---|---|
 | Tool descriptions | the server | Each side learns when to reach for the other. |
 | `cursor-delegate` subagent | `~/.claude/agents/` | Claude hands any reachable work to Cursor by itself. |
-| `agent-bridge.mdc` rule | `~/.cursor/rules/` | Cursor asks Claude for plans and reviews by itself. |
+| `agent-bridge.md` rule | `~/.claude/rules/` | Tells Claude, every session, to spawn that subagent. |
+| `agent-bridge.mdc` rule | `~/.cursor/rules/` | Cursor asks Claude for hard design calls and Claude-only tools by itself. |
 
 ### What to delegate
 
@@ -186,9 +188,11 @@ log to see whether the routing is really happening.
 The subagent runs on Haiku and holds a single tool, so its own cost is negligible.
 The real work happens inside Cursor.
 
-There is also `install/claude-md-snippet.md`. Paste it into a project's `CLAUDE.md`
-if you want the rule in one repository only. Do not put it in your global `CLAUDE.md`,
-or you will push delegation into every project you own, including client work.
+`install/claude-md-snippet.md` is that Claude rule. The installer copies it to
+`~/.claude/rules/agent-bridge.md`. Claude Code loads that file in every session,
+which is what makes the handoff happen. The rule keeps Microsoft 365, branded
+documents, and the final client-facing judgement in Claude. Do not also paste it
+into `CLAUDE.md`, or the same instruction loads twice.
 
 ## Reading the log
 

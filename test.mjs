@@ -1,7 +1,13 @@
 // Self-check: start the server, list tools, call ask_claude, and prove the depth guard refuses.
+import { readFileSync } from 'node:fs';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import assert from 'node:assert/strict';
+
+const rule = readFileSync(new URL('./install/claude-md-snippet.md', import.meta.url), 'utf8');
+assert.match(rule, /cursor-delegate/);
+assert.doesNotMatch(rule, /cursor-executor/);
+console.log('claude rule names cursor-delegate');
 
 const SERVER = new URL('./server.mjs', import.meta.url).pathname;
 

@@ -41,8 +41,10 @@ main() {
     else
       progress "Claude Code MCP entry already exists"
     fi
-    mkdir -p "$HOME/.claude/agents"
+    mkdir -p "$HOME/.claude/agents" "$HOME/.claude/rules"
     cp "$repo_dir/install/cursor-delegate.md" "$HOME/.claude/agents/cursor-delegate.md"
+    cp "$repo_dir/install/claude-md-snippet.md" "$HOME/.claude/rules/agent-bridge.md"
+    progress "Installed the Claude user rule at ~/.claude/rules/agent-bridge.md"
   else
     warn "claude command not found, skipping Claude Code integration"
   fi

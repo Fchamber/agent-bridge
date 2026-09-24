@@ -10,7 +10,8 @@ warn() {
 }
 
 main() {
-  local mcp_json
+  local mcp_json script_dir rule src
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
   progress "Removing Claude Code integration"
   if command -v "claude" >/dev/null 2>&1; then
@@ -20,6 +21,15 @@ main() {
   fi
   rm -f "$HOME/.claude/agents/cursor-executor.md"
   rm -f "$HOME/.claude/agents/cursor-delegate.md"
+  rule="$HOME/.claude/rules/agent-bridge.md"
+  src="$script_dir/install/claude-md-snippet.md"
+  if [ -f "$rule" ]; then
+    if cmp -s "$rule" "$src"; then
+      rm -f "$rule"
+    else
+      warn "Left $rule in place because it no longer matches the installed copy"
+    fi
+  fi
 
   progress "Removing Cursor integration"
   rm -f "$HOME/.cursor/rules/agent-bridge.mdc"
