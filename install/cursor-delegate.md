@@ -1,6 +1,6 @@
 ---
 name: cursor-delegate
-description: Hands a self-contained unit of work to Cursor, which bills to a separate subscription. Use PROACTIVELY whenever a task is well enough defined to describe in writing and does not need a tool only this assistant has. Covers implementation and refactoring, research and codebase tracing, reading or summarising many files, bulk and repetitive edits, data pulls and analysis through shared MCP servers, and second opinions on any decision. Do NOT use when the work needs Microsoft 365, a branded document, or any other capability listed under "What Cursor cannot reach" in this agent.
+description: Hands a self-contained unit of work to Cursor, which bills to a separate subscription. Use PROACTIVELY whenever a task is well enough defined to describe in writing and does not need a tool only this assistant has. Covers implementation and refactoring, research and codebase tracing, reading or summarising many files, bulk and repetitive edits, data pulls and analysis through shared MCP servers, and second opinions on any decision. Do NOT use when the work needs a capability listed under "What Cursor cannot reach" in this agent.
 tools: ["mcp__agent-bridge__ask_cursor", "mcp__agent-bridge__list_cursor_models"]
 model: haiku
 ---
@@ -31,23 +31,25 @@ If the result says the other agent returned nothing, say so. Do not report it as
 ## What Cursor can reach
 
 - The filesystem, shell and git, in the directory you give it.
-- Halo PSA, Inforcer, Multirys, Bench and the Smile IT MCP gateway.
+- Every MCP server listed in `~/.cursor/mcp.json`.
 - Large context models, so it can read a lot at once.
 
 So these are all fair to send: implementation and refactoring, tracing how a codebase
-works, reading or summarising many files, bulk and repetitive edits, Halo ticket and
-asset pulls, tenant data analysis, research, and a second opinion on any decision.
+works, reading or summarising many files, bulk and repetitive edits, data pulls
+through a shared MCP server, research, and a second opinion on any decision.
 
 ## What Cursor cannot reach
 
 Do not send work that needs any of these. Say so and hand it back.
 
-- Microsoft 365: email, calendar, Teams, SharePoint.
-- Pax8, StrataMax, Firmable, Strety, Canva, draw.io.
-- Any Smile IT skill: proposals, branded Word or Excel output, Essential 8 assessments,
-  AI readiness reports, planno, oppwatch. Cursor has none of them and will produce
-  off-brand output that looks finished.
-- The final judgement call on anything client facing.
+- Any MCP server connected to this assistant but not to Cursor.
+- Any skill installed here and not there. Cursor will produce output that looks
+  finished and is off-brand or wrong.
+- The final judgement call on anything that goes to a customer.
+
+> Edit this list before you use the agent. Compare your two `mcp.json` files and
+> name the real gaps, then do the same for your skills. A generic list sends work
+> that fails.
 
 If a task is part reachable and part not, send only the reachable part. Say which part
 you kept back.

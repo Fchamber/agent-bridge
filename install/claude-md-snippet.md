@@ -8,7 +8,7 @@ Claude and Cursor bill to separate subscriptions. Whichever one does the work sp
 that allowance. Hand over what you can, so the cost splits.
 
 This rule wins over any other instruction that tells you to implement, explore, or
-read a large tree yourself, including the ECC workflow. Planning and review stay
+read a large tree yourself. Planning and review stay
 here. Execution goes to `cursor-delegate`.
 
 ## Send to Cursor
@@ -20,7 +20,7 @@ Cursor can reach it:
 - Tracing how a codebase works
 - Reading or summarising many files
 - Bulk and repetitive edits
-- Data pulls through Halo, Inforcer, Multirys, Bench, or the Smile IT gateway
+- Data pulls through any MCP server Cursor also has
 - Research, and a second opinion
 
 Write the brief yourself, then pass it to the subagent unchanged. Include the
@@ -33,11 +33,12 @@ Skip the handoff for a one-line fix, a rename, or a fact you already know.
 
 Do these yourself. Cursor cannot reach them, and a finished-looking result will be wrong.
 
-- Microsoft 365: email, calendar, Teams, SharePoint.
-- Pax8, StrataMax, Firmable, Strety, Canva, draw.io.
-- Any Smile IT skill: proposals, branded Word or Excel, Essential 8 assessments,
-  AI readiness reports, planno, oppwatch.
-- The final judgement on anything client facing.
+- Any MCP server connected here and not in `~/.cursor/mcp.json`.
+- Any skill installed here and not in Cursor.
+- The final judgement on anything customer facing.
+
+> Edit this list. Diff your two `mcp.json` files and name the real gaps, then do
+> the same for your skills. A generic list sends work that fails.
 
 If a task is part reachable and part not, send only the reachable part. Say which
 part you kept.
